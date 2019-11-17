@@ -1,8 +1,8 @@
 "use strict";
 
 module.exports = (sequelize, DataTypes) => {
-  const vehicle = sequelize.define(
-    "vehicle",
+  const bookings = sequelize.define(
+    "bookings",
     {
       id: {
         type: DataTypes.INTEGER(10),
@@ -10,8 +10,16 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true
       },
-      numberPlate: {
+      status: {
         type: DataTypes.STRING(20),
+        allowNull: false
+      },
+      state: {
+        type: DataTypes.STRING(10),
+        allowNull: false
+      },
+      user_id: {
+        type: DataTypes.INTEGER(11),
         allowNull: false
       }
     },
@@ -19,5 +27,5 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     }
   );
-  return vehicle;
+  return bookings;
 };
