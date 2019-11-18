@@ -13,7 +13,7 @@ const swaggerJsDoc = require("swagger-jsdoc");
 
 const app = express();
 //Test enviornment
-console.log("Mail Server " + config.get("mail.host"));
+// console.log("Mail Server " + config.get("mail.host"));
 
 //middlewares//.............
 app.use(bodyparser.json());

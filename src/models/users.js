@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
   user.associate = function(models) {
     user.belongsToMany(models.bookings, {
       through: models.bookings,
-      foreignKey: "userId",
+      foreignKey: "user_Id",
       as: "user_bookings"
     });
   };

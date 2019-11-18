@@ -19,5 +19,12 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     }
   );
+  vehicle.associate = function(models) {
+    vehicle.belongsToMany(models.vehicledetail, {
+      through: models.vehicledetail,
+      foreignKey: "vehicle_id",
+      as: "vechile_VehicleDetail"
+    });
+  };
   return vehicle;
 };
