@@ -2,7 +2,6 @@ const Joi = require("@hapi/joi");
 const express = require("express");
 const db = require("./db/dbconnection");
 const bodyparser = require("body-parser");
-process.env.NODE_CONFIG_DIR = './src/config'
 const config = require("config");
 const courses = require("./routes/courses");
 const auth = require("./routes/auth");

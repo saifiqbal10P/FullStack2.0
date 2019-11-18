@@ -4,7 +4,8 @@
   "description": "Node Server",
   "main": "app.js",
   "scripts": {
-    "start": "node src/app.js"
+    "migrate": "",
+    "start": "cd src && npx sequelize db:migrate && npx sequelize db:seed:all && node app.js"
   },
   "author": "",
   "license": "ISC",
