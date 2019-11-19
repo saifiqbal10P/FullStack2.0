@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "10pearls",
-    "database": "newdb",
+    "database": "fullstack2",
     "host": "localhost",
     "dialect": "postgres",
     "operatorsAliases": false

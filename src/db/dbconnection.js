@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 
-process.env.DB_DBNAME="newdb";
+process.env.DB_DBNAME="fullstack2";
 process.env.DB_USER="postgres";
 process.env.DB_PASSWORD="10pearls";
 process.env.DB_HOST="localhost";

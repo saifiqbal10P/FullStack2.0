@@ -2,9 +2,13 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
+
+
+
     var sequelize = queryInterface.sequelize;
 
     return Promise.all([
+
       queryInterface.bulkInsert(
         "users",
         [
@@ -37,21 +41,45 @@ module.exports = {
           }
         ],
         {}
-      ).then(data=>{
-        Promise.all([
-        sequelize.query('SELECT id FROM vehicle', { type: sequelize.QueryTypes.SELECT}),
-        ]).then((vehicleids)=>{
-          console.log(vehicleids);
-          var vehicleDetail = [];
-          vehicleids.forEach(vehicleId=> {
-            vehicleDetail.push({
-              vehicle_id: vehicleId.id,
-              seatingCapacity: 4,
-              availableSeats:0
-            })
-          });
-         queryInterface.bulkInsert('vehicledetail', vehicleDetail, {});
-        })
+      ).then(async function (result) {
+
+        console.log("started")
+        //Vehicle Detail
+        await queryInterface.sequelize.query("SELECT id FROM vehicle", { type: Sequelize.QueryTypes.SELECT })
+          .then(function (vehicleids) {
+            console.log(vehicleids);
+            var vehicleDetail = [];
+            vehicleids.forEach(vehicleId => {
+              vehicleDetail.push({
+                vehicle_id: vehicleId.id,
+                seatingCapacity: 4,
+                availableSeats: 0
+              })
+            });
+
+            queryInterface.bulkInsert('vehicledetail', vehicleDetail, {});
+
+          }).catch(function (errpor) {
+console.log("error");
+          })
+        //Vehicle Routes
+
+        await queryInterface.sequelize.query("SELECT id FROM vehicledetail", { type: Sequelize.QueryTypes.SELECT })
+          .then(function (vehicledetailids) {
+            console.log(vehicledetailids);
+            var routes = [];
+            vehicledetailids.forEach(vehicledetailid => {
+              routes.push({
+                vehicledetail_id: vehicledetailid.id,
+                routes: '{ "routes":[ {"lat": "24.312131", "long": "45.123123"} , {"lat": "67.991233", "long": "64.999712"} ] }',
+              })
+            });
+
+            queryInterface.bulkInsert('routes', routes, {});
+
+          }).catch(function (errpor) {
+
+          })
       })
     ]);
   },

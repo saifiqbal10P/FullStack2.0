@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true
       },
       routes:{
-          type:DataTypes.STRING,
+          type:DataTypes.JSONB,
           allowNull:true
       },
       vehicleDetail_id:{

@@ -2,7 +2,7 @@
 
 module.exports = (sequelize, DataTypes) => {
   const vehicledetail = sequelize.define(
-    "vehicle",
+    "vehicledetail",
     {
       id: {
         type: DataTypes.INTEGER(10),

@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = (sequelize, DataTypes) => {
-  const user = sequelize.define(
+  const users = sequelize.define(
     "users",
     {
       id: {
@@ -23,12 +23,12 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     }
   );
-  user.associate = function(models) {
-    user.belongsToMany(models.bookings, {
+  users.associate = function(models) {
+    users.belongsToMany(models.bookings, {
       through: models.bookings,
       foreignKey: "user_Id",
       as: "user_bookings"
     });
   };
-  return user;
+  return users;
 };
