@@ -3,6 +3,7 @@ services:
     web:
       build: .
       entrypoint: ["/bin/bash", "./src/entrypoint.sh"]
+      # command: bash -c "cd src && npx sequelize db:migrate && npx sequelize db:seed:all && node app.js"
       volumes:
        - ./src:/usr/app/src
       ports:

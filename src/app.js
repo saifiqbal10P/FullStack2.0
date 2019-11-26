@@ -5,6 +5,7 @@ const bodyparser = require("body-parser");
 const config = require("config");
 const courses = require("./routes/courses");
 const auth = require("./routes/auth");
+const vechileRoutes = require("./routes/vehicleroutes");
 const home = require("./routes/home");
 const logger = require("./middlewares/logger");
 const swaggerUi = require("swagger-ui-express");
@@ -43,6 +44,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/", home);
 app.use("/api/courses", courses);
 app.use("/api/", auth);
+app.use("/api/routes", vechileRoutes);
 
 const port = process.env.Port || 9000;
 app.listen(9000, () => console.log(`listening on port ${port}`));

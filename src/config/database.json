@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "postgres",
+    "username": "saif10p",
     "password": "10pearls",
-    "database": "fullstack2",
-    "host": "localhost",
+    "database": "fullstackdb",
+    "host": "postgres",
     "dialect": "postgres",
     "operatorsAliases": false
   },

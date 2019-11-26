@@ -1,9 +1,9 @@
 const Sequelize = require("sequelize");
 
-process.env.DB_DBNAME="fullstack2";
-process.env.DB_USER="postgres";
-process.env.DB_PASSWORD="10pearls";
-process.env.DB_HOST="localhost";
+// process.env.DB_DBNAME="fullstack2";
+// process.env.DB_USER="postgres";
+// process.env.DB_PASSWORD="10pearls";
+// process.env.DB_HOST="localhost";
 
 
 const sequelize = new Sequelize(process.env.DB_DBNAME, process.env.DB_USER, process.env.DB_PASSWORD, {
@@ -11,6 +11,11 @@ const sequelize = new Sequelize(process.env.DB_DBNAME, process.env.DB_USER, proc
   dialect: "postgres",
   define: {
     timestamps: false
+  },
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
   }
 });
 

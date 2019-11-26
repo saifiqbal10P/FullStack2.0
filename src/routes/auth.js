@@ -1,5 +1,5 @@
 const router = require("express").Router();
-// const userModel = require("../models/user");
+const userService = require("../services/auth");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Joi = require("@hapi/joi");
@@ -31,60 +31,66 @@ const Joi = require("@hapi/joi");
 //     });
 // });
 
-// router.post("/login", async (req, res) => {
-//   const { error } = validateLoginModel(req);
-//   if (error) {
-//     return res.status(400).send(error.details[0].message);
-//   }
+router.post("/login", async (req, res) => {
+  const { error } = validateLoginModel(req);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
 
-//   let user = await userModel.findOne({ username: req.body.username });
-//   if (!user) return res.status(400).send("username or password is invalid");
+  let user = await userService.GetUserByUserName(req.body.email);
+  if (!user) return res.status(400).send("username or password is invalid");
 
-//   const isValidPassword = await bcrypt.compare(
-//     req.body.password,
-//     user.password
-//   );
-//   if (!isValidPassword) return res.status(400).send("password is invalid");
+  // const isValidPassword = await bcrypt.compare(
+  //   req.body.password,
+  //   user.password
+  // );
 
-//   var token = jwt.sign({ id: user.id }, "jwtprivateKey"); //get this key from config file
+  if(!req.body.password===user.password)
+  {
+    return res.status(400).send("password is invalid");
+  }
 
-//   res.json({
-//     token: token
-//   });
-// });
+  //if (!isValidPassword) return res.status(400).send("password is invalid");
 
-// function validate(req) {
-//   const schema = Joi.object({
-//     username: Joi.string()
-//       .min(5)
-//       .max(100)
-//       .required(),
-//     email: Joi.string()
-//       .min(5)
-//       .max(50)
-//       .required()
-//       .email(),
-//     password: Joi.string()
-//       .min(5)
-//       .max(255)
-//       .required()
-//   }).options({ allowUnknown: true });
+  var token = jwt.sign({ id: user.id }, "jwtprivateKey"); //get this key from config file
 
-//   return schema.validate(req.body);
-// }
-// function validateLoginModel(req) {
-//   const schema = Joi.object({
-//     username: Joi.string()
-//       .min(5)
-//       .max(100)
-//       .required(),
-//     password: Joi.string()
-//       .min(5)
-//       .max(255)
-//       .required()
-//   }).options({ allowUnknown: true });
+  res.json({
+    token: token
+  });
+});
 
-//   return schema.validate(req.body);
-// }
+function validate(req) {
+  const schema = Joi.object({
+    username: Joi.string()
+      .min(5)
+      .max(100)
+      .required(),
+    email: Joi.string()
+      .min(5)
+      .max(50)
+      .required()
+      .email(),
+    password: Joi.string()
+      .min(5)
+      .max(255)
+      .required()
+  }).options({ allowUnknown: true });
+
+  return schema.validate(req.body);
+}
+function validateLoginModel(req) {
+  const schema = Joi.object({
+    email: Joi.string()
+      .min(5)
+      .max(100)
+      .required(),
+    password: Joi.string()
+      .min(5)
+      .max(255)
+      .required()
+  }).options({ allowUnknown: true });
+
+  return schema.validate(req.body);
+}
 
 module.exports = router;
