@@ -11,7 +11,6 @@ const logger = require("./middlewares/logger");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 
-
 const app = express();
 //Test enviornment
 // console.log("Mail Server " + config.get("mail.host"));

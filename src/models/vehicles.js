@@ -1,8 +1,8 @@
 "use strict";
 
 module.exports = (sequelize, DataTypes) => {
-  const vehicle = sequelize.define(
-    "vehicle",
+  const vehicles = sequelize.define(
+    "vehicles",
     {
       id: {
         type: DataTypes.INTEGER(10),
@@ -19,12 +19,12 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     }
   );
-  vehicle.associate = function(models) {
-    vehicle.belongsTo(models.vehicledetail, {
+  vehicles.associate = function(models) {
+    vehicles.belongsTo(models.vehicledetails, {
       through: models.vehicledetail,
       foreignKey: "vehicle_id",
       as: "vechile_VehicleDetail"
     });
   };
-  return vehicle;
+  return vehicles;
 };

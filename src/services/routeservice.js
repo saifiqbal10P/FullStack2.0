@@ -1,15 +1,16 @@
-const { vehicle } = require("../models/index");
+const { vehicles } = require("../models/index");
 
 class RouteService {
-  constructor() { }
+  constructor() {}
 
   static async GetRoutes() {
-
-    var routes= await vehicle.findAll();
+    var routes = await vehicles.findAll({
+      attributes: ["id", "numberPlate"]
+    });
 
     console.log(routes);
-    return await vehicle.findAll({
-        include:[VehicleDetail,Routes]
+    return await vehicles.findAll({
+      include: [VehicleDetails, Routes]
     });
   }
 }
