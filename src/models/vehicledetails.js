@@ -18,9 +18,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER(10),
         allowNull: true
       },
-      vehicle_id: {
-        type: DataTypes.INTEGER(10),
-        allowNull: false
+      routeid:{
+        type:DataTypes.INTEGER,
+        allowNull:false
       }
     },
     {
@@ -28,10 +28,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   vehicledetails.associate = function(models) {
-    vehicledetails.belongsToMany(models.routes, {
+    vehicledetails.belongsTo(models.routes, {
       through: models.routes,
-      foreignKey: "vehicleDetail_id",
-      as: "VehicleDetail_Routes"
+      foreignKey: "routeid",
+      as: "vehicleroutes"
     });
   };
 

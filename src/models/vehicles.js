@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       numberPlate: {
         type: DataTypes.STRING(20),
         allowNull: false
+      },
+      vehicledetail_id:{
+        type:DataTypes.INTEGER,
+        allowNull:false
       }
     },
     {
@@ -20,10 +24,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   vehicles.associate = function(models) {
-    vehicles.belongsTo(models.vehicledetails, {
-      through: models.vehicledetail,
-      foreignKey: "vehicle_id",
-      as: "vechile_VehicleDetail"
+    vehicles.belongsTo(models.vehicledetails,{
+      through: models.vehicledetails,
+      foreignKey: "vehicledetail_id",
+      as: "vehicledetails"
     });
   };
   return vehicles;

@@ -5,7 +5,8 @@ const bcrypt = require("bcrypt");
 const Joi = require("@hapi/joi");
 
 router.get("/", async (req, res) => {
-  return routeService.GetRoutes();
+  var response=await routeService.GetRoutes();
+  res.send(response);
 });
 
 module.exports = router;

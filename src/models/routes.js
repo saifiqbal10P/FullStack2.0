@@ -13,10 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       routes:{
           type:DataTypes.JSONB,
           allowNull:true
-      },
-      vehicleDetail_id:{
-        type:DataTypes.INTEGER(10),
-        allowNull:false
       }
     },
     {

@@ -49,16 +49,15 @@ module.exports = {
             }
           });
         }),
-      queryInterface
-        .createTable("vehicles", {
+        queryInterface.createTable("routes", {
           id: {
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
             type: Sequelize.INTEGER
           },
-          numberPlate: {
-            type: Sequelize.STRING,
+          routes: {
+            type: Sequelize.JSONB,
             allowNull: false
           }
         })
@@ -79,25 +78,26 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 allowNull: false
               },
-              vehicle_id: {
+              routeid: {
                 type: Sequelize.INTEGER,
                 references: {
-                  model: "vehicles",
+                  model: "routes",
                   key: "id"
                 },
                 allowNull: false
               }
             })
             .then(function() {
-              return queryInterface.createTable("routes", {
+              return  queryInterface
+              .createTable("vehicles", {
                 id: {
                   allowNull: false,
                   autoIncrement: true,
                   primaryKey: true,
                   type: Sequelize.INTEGER
                 },
-                routes: {
-                  type: Sequelize.JSONB,
+                numberPlate: {
+                  type: Sequelize.STRING,
                   allowNull: false
                 },
                 vehicledetail_id: {
@@ -108,7 +108,7 @@ module.exports = {
                   },
                   allowNull: false
                 }
-              });
+              })
             });
         })
     ]);
