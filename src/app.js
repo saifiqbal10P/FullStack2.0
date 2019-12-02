@@ -41,7 +41,6 @@ const swaggerDocument = swaggerJsDoc(swaggerOptions);
 //routes//.......................
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/", home);
-app.use("/api/courses", courses);
 app.use("/api/", auth);
 app.use("/api/routes", vechileRoutes);
 

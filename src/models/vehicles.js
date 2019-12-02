@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(20),
         allowNull: false
       },
-      vehicledetail_id:{
-        type:DataTypes.INTEGER,
-        allowNull:false
+      vehicledetail_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false
       }
     },
     {
@@ -24,10 +24,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   vehicles.associate = function(models) {
-    vehicles.belongsTo(models.vehicledetails,{
+    vehicles.belongsTo(models.vehicledetails, {
       through: models.vehicledetails,
       foreignKey: "vehicledetail_id",
       as: "vehicledetails"
+    });
+  };
+
+  vehicles.associate = function(models) {
+    vehicles.belongsToMany(models.bookings, {
+      through: models.bookings,
+      foreignKey: "vehicle_id",
+      as: "routes_bookings"
     });
   };
   return vehicles;

@@ -19,37 +19,9 @@ module.exports = {
             allowNull: false
           }
         })
-        .then(function() {
-          return queryInterface.createTable("bookings", {
-            id: {
-              allowNull: false,
-              autoIncrement: true,
-              primaryKey: true,
-              type: Sequelize.INTEGER
-            },
-            user_id: {
-              type: Sequelize.INTEGER,
-              references: {
-                model: "users",
-                key: "id"
-              },
-              allowNull: false
-            },
-            status: {
-              type: Sequelize.STRING,
-              allowNull: false
-            },
-            state: {
-              type: Sequelize.STRING,
-              allowNull: false
-            },
-            createdAt: {
-              allowNull: false,
-              type: Sequelize.DATE
-            }
-          });
-        }),
-        queryInterface.createTable("routes", {
+        .then(function() {}),
+      queryInterface
+        .createTable("routes", {
           id: {
             allowNull: false,
             autoIncrement: true,
@@ -88,27 +60,71 @@ module.exports = {
               }
             })
             .then(function() {
-              return  queryInterface
-              .createTable("vehicles", {
-                id: {
-                  allowNull: false,
-                  autoIncrement: true,
-                  primaryKey: true,
-                  type: Sequelize.INTEGER
-                },
-                numberPlate: {
-                  type: Sequelize.STRING,
-                  allowNull: false
-                },
-                vehicledetail_id: {
-                  type: Sequelize.INTEGER,
-                  references: {
-                    model: "vehicledetails",
-                    key: "id"
+              return queryInterface
+                .createTable("vehicles", {
+                  id: {
+                    allowNull: false,
+                    autoIncrement: true,
+                    primaryKey: true,
+                    type: Sequelize.INTEGER
                   },
-                  allowNull: false
-                }
-              })
+                  numberPlate: {
+                    type: Sequelize.STRING,
+                    allowNull: false
+                  },
+                  vehicledetail_id: {
+                    type: Sequelize.INTEGER,
+                    references: {
+                      model: "vehicledetails",
+                      key: "id"
+                    },
+                    allowNull: false
+                  }
+                })
+                .then(function() {
+                  return queryInterface.createTable("bookings", {
+                    id: {
+                      allowNull: false,
+                      autoIncrement: true,
+                      primaryKey: true,
+                      type: Sequelize.INTEGER
+                    },
+                    user_id: {
+                      type: Sequelize.INTEGER,
+                      references: {
+                        model: "users",
+                        key: "id"
+                      },
+                      allowNull: false
+                    },
+                    vehicle_id: {
+                      type: Sequelize.INTEGER,
+                      references: {
+                        model: "vehicles",
+                        key: "id"
+                      },
+                      allowNull: false
+                    },
+                    status: {
+                      type: Sequelize.STRING,
+                      allowNull: false
+                    },
+                    state: {
+                      type: Sequelize.STRING,
+                      allowNull: false
+                    },
+                    createdAt: {
+                      allowNull: false,
+                      type: Sequelize.DATE,
+                      defaultValue: new Date()
+                    },
+                    updatedAt: {
+                      allowNull: false,
+                      type: Sequelize.DATE,
+                      defaultValue: new Date()
+                    }
+                  });
+                });
             });
         })
     ]);
