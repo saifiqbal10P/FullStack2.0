@@ -1,0 +1,30 @@
+version: "2"
+services:
+  web:
+    build: .
+    entrypoint: ["/bin/bash", "./src/entrypoint.sh"]
+    # command: bash -c "cd src && npx sequelize db:migrate && npx sequelize db:seed:all && node app.js"
+    volumes:
+      - ./src:/usr/app/src
+    ports:
+      - "4000:9000"
+    depends_on:
+      - postgres
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=10pearls
+      - DB_DBNAME=fullstackdb
+      - DB_HOST=postgres
+  postgres:
+    image: postgres
+    ports:
+      - "54320:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=10pearls
+      - POSTGRES_DB=fullstackdb
+    volumes:
+      - postgresql:/var/lib/postgresql
+
+volumes:
+  postgresql:

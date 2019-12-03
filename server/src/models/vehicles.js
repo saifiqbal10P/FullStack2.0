@@ -25,18 +25,17 @@ module.exports = (sequelize, DataTypes) => {
   );
   vehicles.associate = function(models) {
     vehicles.belongsTo(models.vehicledetails, {
-      through: models.vehicledetails,
+      through: models.vehicles,
       foreignKey: "vehicledetail_id",
       as: "vehicledetails"
     });
-  };
 
-  vehicles.associate = function(models) {
     vehicles.belongsToMany(models.bookings, {
       through: models.bookings,
       foreignKey: "vehicle_id",
       as: "routes_bookings"
     });
   };
+
   return vehicles;
 };

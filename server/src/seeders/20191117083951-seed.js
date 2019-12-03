@@ -84,18 +84,21 @@ module.exports = {
       //       .catch(function(errpor) {});
       //   }),
 
-        queryInterface
+      queryInterface
         .bulkInsert(
           "routes",
           [
             {
-              routes: '{ "routes":[ {"lat": "24.312131", "long": "45.123123"} , {"lat": "67.991233", "long": "64.999712"} ] }'
+              routes:
+                '{ "routes":[ {"lat": "24.312131", "long": "45.123123"} , {"lat": "67.991233", "long": "64.999712"} ] }'
             },
             {
-              routes: '{ "routes":[ {"lat": "24.312131", "long": "45.123123"} , {"lat": "67.991233", "long": "64.999712"} ] }'
+              routes:
+                '{ "routes":[ {"lat": "24.312131", "long": "45.123123"} , {"lat": "67.991233", "long": "64.999712"} ] }'
             },
             {
-              routes: '{ "routes":[ {"lat": "24.312131", "long": "45.123123"} , {"lat": "67.991233", "long": "64.999712"} ] }'
+              routes:
+                '{ "routes":[ {"lat": "24.312131", "long": "45.123123"} , {"lat": "67.991233", "long": "64.999712"} ] }'
             }
           ],
           {}
@@ -115,7 +118,11 @@ module.exports = {
                 });
               });
 
-              queryInterface.bulkInsert("vehicledetails", vehicleDetails, {});
+              return queryInterface.bulkInsert(
+                "vehicledetails",
+                vehicleDetails,
+                {}
+              );
             })
             .catch(function(errpor) {
               console.log("error");
@@ -131,15 +138,14 @@ module.exports = {
               vehicledetailids.forEach(vehicledetailid => {
                 vehicles.push({
                   numberPlate: "AEZ-1223",
-                  vehicledetail_id:vehicledetailid.id
+                  vehicledetail_id: vehicledetailid.id
                 });
               });
 
-              queryInterface.bulkInsert("vehicles", vehicles, {});
+              return queryInterface.bulkInsert("vehicles", vehicles, {});
             })
             .catch(function(errpor) {});
         })
-
     ]);
   },
 
