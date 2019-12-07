@@ -10,6 +10,7 @@ const home = require("./routes/home");
 const logger = require("./middlewares/logger");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
+const cors = require("cors");
 
 const app = express();
 //Test enviornment
@@ -18,6 +19,13 @@ const app = express();
 //middlewares//.............
 app.use(bodyparser.json());
 app.use(logger);
+
+//For localhost only
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   next();
+// });
+app.use(cors());
 
 //Swagger document/......
 

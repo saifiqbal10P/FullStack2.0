@@ -3,7 +3,7 @@
     "username": "postgres",
     "password": "10pearls",
     "database": "fullstackdb",
-    "host": "localhost",
+    "host": "postgres",
     "dialect": "postgres",
     "operatorsAliases": false
   },
