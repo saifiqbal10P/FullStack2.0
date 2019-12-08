@@ -5,10 +5,6 @@ import { connect } from "react-redux";
 class Routes extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      routes: []
-    };
   }
 
   componentDidMount() {
@@ -63,7 +59,8 @@ class Routes extends Component {
 
 const mapStateToProps = state => {
   return {
-    routelist: state.routelist
+    routelist: state.routelist,
+    userid: state.userid
   };
 };
 

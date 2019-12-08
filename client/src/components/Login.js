@@ -15,6 +15,7 @@ class Login extends Component {
     })
       .then(res => {
         window.localStorage.setItem("authToken", res.data);
+        this.props.onLoggedIn(res.data.userid);
         this.props.history.push("/Routes");
       })
       .catch(error => {
@@ -95,7 +96,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onChange: e => dispatch({ type: "LOGIN", event: e })
+    onChange: e => dispatch({ type: "LOGIN", event: e }),
+    onLoggedIn: userid => dispatch({ type: "LOGGEDIN", userid: userid })
   };
 };
 

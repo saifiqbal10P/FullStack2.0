@@ -3,36 +3,49 @@ const initialState = {
     email: "",
     password: ""
   },
-  routelist: []
+  routelist: [],
+  userid: ""
 };
 
 const reducer = (state = initialState, action) => {
   debugger;
   if (action.type === "LOGIN") {
+    debugger;
     if (action.event.target.name === "email") {
-      var auth = state.auth;
+      var auth = Object.assign({}, state.auth);
       auth.email = action.event.target.value;
       return {
+        ...state,
         auth: auth
       };
     }
     if (action.event.target.name === "password") {
-      var auth = state.auth;
-
+      var auth = Object.assign({}, state.auth);
       auth.password = action.event.target.value;
-      state.auth = auth;
-
       return {
+        ...state,
         auth: auth
       };
     }
   }
 
   if (action.type === "FETCHROUTES") {
-    var routes = state.routelist;
+    var routes = Object.assign({}, state.routelist);
     routes = action.routes;
     return {
+      ...state,
       routelist: routes
+    };
+  }
+
+  if (action.type === "LOGGEDIN") {
+    debugger;
+    //var userid = state.userid;
+    var userObj = Object.assign({}, state.userid);
+    userObj = action.userid;
+    return {
+      ...state,
+      userid: userObj
     };
   }
   return state;
