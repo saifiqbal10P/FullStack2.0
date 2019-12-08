@@ -45,8 +45,7 @@ router.post("/login", async (req, res) => {
   //   user.password
   // );
 
-  if(!req.body.password===user.password)
-  {
+  if (!req.body.password === user.password) {
     return res.status(400).send("password is invalid");
   }
 
@@ -55,7 +54,8 @@ router.post("/login", async (req, res) => {
   var token = jwt.sign({ id: user.id }, "jwtprivateKey"); //get this key from config file
 
   res.json({
-    token: token
+    token: token,
+    userid: user.id
   });
 });
 

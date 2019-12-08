@@ -1,22 +1,17 @@
 import React, { Component } from "react";
 import Axios from "axios";
+import { connect } from "react-redux";
+
 class Login extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      email: "",
-      password: ""
-    };
   }
-
-  onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   Login = () => {
     debugger;
     Axios.post("http://localhost:4000/api/login", {
-      email: this.state.email,
-      password: this.state.password
+      email: this.props.auth.email,
+      password: this.props.auth.password
     })
       .then(res => {
         window.localStorage.setItem("authToken", res.data);
@@ -47,7 +42,7 @@ class Login extends Component {
                       name="email"
                       id="email"
                       className="form-control"
-                      onChange={this.onChange}
+                      onChange={event => this.props.onChange(event)}
                     ></input>
                   </div>
                   <div className="form-group">
@@ -58,7 +53,7 @@ class Login extends Component {
                       name="password"
                       id="password"
                       className="form-control"
-                      onChange={this.onChange}
+                      onChange={event => this.props.onChange(event)}
                     />
                   </div>
                   <div className="form-group">
@@ -92,4 +87,16 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = state => {
+  return {
+    auth: state.auth
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onChange: e => dispatch({ type: "LOGIN", event: e })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

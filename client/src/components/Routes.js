@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Axios from "axios";
+import { connect } from "react-redux";
 
 class Routes extends Component {
   constructor(props) {
@@ -11,22 +12,20 @@ class Routes extends Component {
   }
 
   componentDidMount() {
-    debugger;
     Axios.get("http://localhost:4000/api/routes")
       .then(res => {
-        var routes = [...this.state.routes]; // at this point contactPhone !== this.state.contactPhone
-        routes = res.data;
-        this.setState({ routes });
+        debugger;
+        this.props.fetchRoutes(res.data);
 
-        // this.setState = {
-        //   routes: [...res.data]
-        // };
+        // var routes = [...this.state.routes]; // at this point contactPhone !== this.state.contactPhone
+        // routes = res.data;
+        // this.setState({ routes });
       })
       .catch(err => {});
   }
 
   render() {
-    var routeList = this.state.routes.map(route => {
+    var routeList = this.props.routelist.map(route => {
       return (
         <div
           style={{ backgroundColor: "white !important" }}
@@ -62,4 +61,16 @@ class Routes extends Component {
   }
 }
 
-export default Routes;
+const mapStateToProps = state => {
+  return {
+    routelist: state.routelist
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchRoutes: routes => dispatch({ type: "FETCHROUTES", routes: routes })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Routes);
