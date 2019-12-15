@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import { connect } from "react-redux";
+import socketClient from "socket.io-client";
 
 class Routes extends Component {
   constructor(props) {
@@ -8,14 +9,17 @@ class Routes extends Component {
   }
 
   componentDidMount() {
+    const socket = socketClient("http://127.0.0.1:4000");
+
+    socket.on("UpdateRoutes", data => {
+      debugger;
+      this.props.fetchRoutes(data);
+    });
+
     Axios.get("http://localhost:4000/api/routes")
       .then(res => {
         debugger;
         this.props.fetchRoutes(res.data);
-
-        // var routes = [...this.state.routes]; // at this point contactPhone !== this.state.contactPhone
-        // routes = res.data;
-        // this.setState({ routes });
       })
       .catch(err => {});
   }

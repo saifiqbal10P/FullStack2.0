@@ -11,8 +11,9 @@ const logger = require("./middlewares/logger");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 const cors = require("cors");
-
 const app = express();
+const socketconfig = require("./socket/socket");
+
 //Test enviornment
 // console.log("Mail Server " + config.get("mail.host"));
 
@@ -52,5 +53,11 @@ app.use("/", home);
 app.use("/api/", auth);
 app.use("/api/routes", vechileRoutes);
 
+//Socket IO  Test....................
+
+//End Test
+
 const port = process.env.Port || 9000;
-app.listen(9000, () => console.log(`listening on port ${port}`));
+var server = app.listen(9000, () => console.log(`listening on port ${port}`));
+
+new socketconfig(server);

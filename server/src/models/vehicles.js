@@ -30,10 +30,9 @@ module.exports = (sequelize, DataTypes) => {
       as: "vehicledetails"
     });
 
-    vehicles.belongsToMany(models.bookings, {
-      through: models.bookings,
+    vehicles.hasMany(models.bookings, {
       foreignKey: "vehicle_id",
-      as: "routes_bookings"
+      sourceKey: "id"
     });
   };
 

@@ -22,6 +22,12 @@ class RouteService {
           ]
         }
       ]
+      // include: [
+      //   {
+      //     model: bookings,
+      //     as: "routes_bookings"
+      //   }
+      // ]
     });
   }
   static async GetRouteDetails(routeid) {
@@ -52,5 +58,15 @@ class RouteService {
       createdAt: new Date()
     });
   }
+
+  static UpdateRoutes = async socket => {
+    try {
+      var result = await this.GetRoutes();
+
+      socket.emit("UpdateRoutes", result); // Emitting a new message. It will be consumed by the client
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
+  };
 }
 module.exports = RouteService;
