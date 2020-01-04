@@ -29,12 +29,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "vehicledetail_id",
       as: "vehicledetails"
     });
-
-    vehicles.hasMany(models.bookings, {
-      foreignKey: "vehicle_id",
-      sourceKey: "id"
-    });
   };
-
   return vehicles;
 };

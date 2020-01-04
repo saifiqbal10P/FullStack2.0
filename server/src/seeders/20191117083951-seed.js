@@ -1,152 +1,96 @@
 "use strict";
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  async up(queryInterface, Sequelize) {
     var sequelize = queryInterface.sequelize;
 
-    return Promise.all([
-      queryInterface.bulkInsert(
-        "users",
-        [
-          {
-            email: "saifullah.iqbal@tenpearls.com",
-            password: "10pearls"
-          },
-          {
-            email: "fullstack@tenpearls.com",
-            password: "10pearls"
-          },
-          {
-            email: "testing@tenpearls.com",
-            password: "10pearls"
-          }
-        ],
-        {}
-      ),
-      // queryInterface
-      //   .bulkInsert(
-      //     "vehicles",
-      //     [
-      //       {
-      //         numberPlate: "AEZ-3392"
-      //       },
-      //       {
-      //         numberPlate: "ZER-0092"
-      //       },
-      //       {
-      //         numberPlate: "AEZ-6615"
-      //       }
-      //     ],
-      //     {}
-      //   )
-      //   .then(async function(result) {
-      //     console.log("started");
-      //     //Vehicle Detail
-      //     await queryInterface.sequelize
-      //       .query("SELECT id FROM vehicles", {
-      //         type: Sequelize.QueryTypes.SELECT
-      //       })
-      //       .then(function(vehicleids) {
-      //         console.log(vehicleids);
-      //         var vehicleDetails = [];
-      //         vehicleids.forEach(vehicleId => {
-      //           vehicleDetails.push({
-      //             vehicle_id: vehicleId.id,
-      //             seatingCapacity: 4,
-      //             availableSeats: 0
-      //           });
-      //         });
+    ////Just to save time we are only checking one table for seeding .If no data exists in users table then run seed. Proper work is to check every table for seeding
+    const user = await queryInterface.rawSelect("users", {}, ["id"]);
 
-      //         queryInterface.bulkInsert("vehicledetails", vehicleDetails, {});
-      //       })
-      //       .catch(function(errpor) {
-      //         console.log("error");
-      //       });
-      //     //Vehicle Routes
-
-      //     await queryInterface.sequelize
-      //       .query("SELECT id FROM vehicledetails", {
-      //         type: Sequelize.QueryTypes.SELECT
-      //       })
-      //       .then(function(vehicledetailids) {
-      //         console.log(vehicledetailids);
-      //         var routes = [];
-      //         vehicledetailids.forEach(vehicledetailid => {
-      //           routes.push({
-      //             vehicledetail_id: vehicledetailid.id,
-      //             routes:
-      //               '{ "routes":[ {"lat": "24.312131", "long": "45.123123"} , {"lat": "67.991233", "long": "64.999712"} ] }'
-      //           });
-      //         });
-
-      //         queryInterface.bulkInsert("routes", routes, {});
-      //       })
-      //       .catch(function(errpor) {});
-      //   }),
-
-      queryInterface
-        .bulkInsert(
-          "routes",
+    if (!user) {
+      return Promise.all([
+        queryInterface.bulkInsert(
+          "users",
           [
             {
-              routes:
-                '{ "routes":[ {"lat": "24.312131", "long": "45.123123"} , {"lat": "67.991233", "long": "64.999712"} ] }'
+              email: "saifullah.iqbal@tenpearls.com",
+              password: "10pearls"
             },
             {
-              routes:
-                '{ "routes":[ {"lat": "24.312131", "long": "45.123123"} , {"lat": "67.991233", "long": "64.999712"} ] }'
+              email: "fullstack@tenpearls.com",
+              password: "10pearls"
             },
             {
-              routes:
-                '{ "routes":[ {"lat": "24.312131", "long": "45.123123"} , {"lat": "67.991233", "long": "64.999712"} ] }'
+              email: "testing@tenpearls.com",
+              password: "10pearls"
             }
           ],
           {}
-        )
-        .then(async function(result) {
-          await queryInterface.sequelize
-            .query("SELECT id FROM routes", {
-              type: Sequelize.QueryTypes.SELECT
-            })
-            .then(function(routeids) {
-              var vehicleDetails = [];
-              routeids.forEach(routeid => {
-                vehicleDetails.push({
-                  routeid: routeid.id,
-                  seatingCapacity: 4,
-                  availableSeats: 0
+        ),
+        queryInterface
+          .bulkInsert(
+            "routes",
+            [
+              {
+                routes:
+                  '{ "routes":[ {"lat": "24.312131", "long": "45.123123"} , {"lat": "67.991233", "long": "64.999712"} ] }'
+              },
+              {
+                routes:
+                  '{ "routes":[ {"lat": "24.312131", "long": "45.123123"} , {"lat": "67.991233", "long": "64.999712"} ] }'
+              },
+              {
+                routes:
+                  '{ "routes":[ {"lat": "24.312131", "long": "45.123123"} , {"lat": "67.991233", "long": "64.999712"} ] }'
+              }
+            ],
+            {}
+          )
+          .then(async function(result) {
+            await queryInterface.sequelize
+              .query("SELECT id FROM routes", {
+                type: Sequelize.QueryTypes.SELECT
+              })
+              .then(function(routeids) {
+                var vehicleDetails = [];
+                routeids.forEach(routeid => {
+                  vehicleDetails.push({
+                    routeid: routeid.id,
+                    seatingCapacity: 4,
+                    availableSeats: 0
+                  });
                 });
+
+                return queryInterface.bulkInsert(
+                  "vehicledetails",
+                  vehicleDetails,
+                  {}
+                );
+              })
+              .catch(function(errpor) {
+                console.log("error");
               });
+            //Vehicle Routes
 
-              return queryInterface.bulkInsert(
-                "vehicledetails",
-                vehicleDetails,
-                {}
-              );
-            })
-            .catch(function(errpor) {
-              console.log("error");
-            });
-          //Vehicle Routes
-
-          await queryInterface.sequelize
-            .query("SELECT id FROM vehicledetails", {
-              type: Sequelize.QueryTypes.SELECT
-            })
-            .then(function(vehicledetailids) {
-              var vehicles = [];
-              vehicledetailids.forEach(vehicledetailid => {
-                vehicles.push({
-                  numberPlate: "AEZ-1223",
-                  vehicledetail_id: vehicledetailid.id
+            await queryInterface.sequelize
+              .query("SELECT id FROM vehicledetails", {
+                type: Sequelize.QueryTypes.SELECT
+              })
+              .then(function(vehicledetailids) {
+                var vehicles = [];
+                vehicledetailids.forEach(vehicledetailid => {
+                  vehicles.push({
+                    numberPlate: "AEZ-1223",
+                    vehicledetail_id: vehicledetailid.id
+                  });
                 });
-              });
 
-              return queryInterface.bulkInsert("vehicles", vehicles, {});
-            })
-            .catch(function(errpor) {});
-        })
-    ]);
+                return queryInterface.bulkInsert("vehicles", vehicles, {});
+              })
+              .catch(function(errpor) {});
+          })
+      ]);
+    }
   },
 
   down: (queryInterface, Sequelize) => {

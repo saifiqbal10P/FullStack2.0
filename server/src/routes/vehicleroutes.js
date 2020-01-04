@@ -18,7 +18,7 @@ router.post("/book", async (req, res) => {
   var model = {
     user_id: req.body.userid,
     vehicle_id: req.body.vehicleid,
-    status: "On Way",
+    status: "inprogress",
     state: "Departed"
   };
   await routeService.BookRoute(model);

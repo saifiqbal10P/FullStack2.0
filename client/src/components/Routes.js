@@ -49,7 +49,11 @@ class Routes extends Component {
           </div>
           <div className="card-footer bg-transparent">
             Seats Remaining : {route.vehicledetails.availableSeats}
-            <button className="btn btn-primary" style={{ float: "right" }}>
+            <button
+              onClick={e => BookRoute(route.id, this.props.userid)}
+              className="btn btn-primary"
+              style={{ float: "right" }}
+            >
               Book
             </button>
           </div>
@@ -67,6 +71,15 @@ const mapStateToProps = state => {
     userid: state.userid
   };
 };
+
+function BookRoute(vehicleid, userid) {
+  Axios.post("http://localhost:4000/api/routes/book", {
+    userid: userid,
+    vehicleid: vehicleid
+  })
+    .then(res => {})
+    .catch(err => {});
+}
 
 const mapDispatchToProps = dispatch => {
   return {

@@ -9,7 +9,7 @@ class RouteService {
   constructor() {}
 
   static async GetRoutes() {
-    return await vehicles.findAll({
+    var routesDetails = await vehicles.findAll({
       include: [
         {
           model: vehicledetails,
@@ -22,13 +22,24 @@ class RouteService {
           ]
         }
       ]
-      // include: [
-      //   {
-      //     model: bookings,
-      //     as: "routes_bookings"
-      //   }
-      // ]
     });
+
+    var userbookings = await bookings.findAll({
+      attributes: ["id", "status", "state", "vehicle_id"]
+    });
+
+    for (var route in routesDetails) {
+      var routeBookings = userbookings.filter(
+        x => x.vehicle_id == routesDetails[route].id && x.status == "inprogress"
+      ).length;
+
+      var availableseats =
+        routesDetails[route].vehicledetails.seatingCapacity - routeBookings;
+
+      routesDetails[route].vehicledetails.availableSeats = availableseats;
+    }
+
+    return routesDetails;
   }
   static async GetRouteDetails(routeid) {
     return await vehicles.findAll({
@@ -53,8 +64,8 @@ class RouteService {
     return await bookings.create({
       status: model.status,
       state: model.state,
-      user_id: model.user_id,
-      vehicle_id: model.vehicle_id,
+      user_id: Number(model.user_id),
+      vehicle_id: Number(model.vehicle_id),
       createdAt: new Date()
     });
   }

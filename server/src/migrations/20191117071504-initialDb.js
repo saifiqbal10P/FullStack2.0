@@ -91,18 +91,10 @@ module.exports = {
                     },
                     user_id: {
                       type: Sequelize.INTEGER,
-                      references: {
-                        model: "users",
-                        key: "id"
-                      },
                       allowNull: false
                     },
                     vehicle_id: {
                       type: Sequelize.INTEGER,
-                      references: {
-                        model: "vehicles",
-                        key: "id"
-                      },
                       allowNull: false
                     },
                     status: {

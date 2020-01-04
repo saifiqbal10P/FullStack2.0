@@ -23,12 +23,12 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     }
   );
-  users.associate = function(models) {
-    users.belongsToMany(models.bookings, {
-      through: models.bookings,
-      foreignKey: "user_Id",
-      as: "user_bookings"
-    });
-  };
+  // users.associate = function(models) {
+  //   users.belongsToMany(models.bookings, {
+  //     through: models.bookings,
+  //     foreignKey: "user_Id",
+  //     as: "user_bookings"
+  //   });
+  // };
   return users;
 };
